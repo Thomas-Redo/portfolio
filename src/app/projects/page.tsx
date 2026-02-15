@@ -4,7 +4,8 @@ import { projects } from "@/data/projects";
 
 export const metadata = {
   title: "Projects — Thomas Hart",
-  description: "A collection of software projects spanning SaaS, ecommerce, data visualization, and AI.",
+  description:
+    "A collection of software projects spanning SaaS, ecommerce, data visualization, and AI.",
 };
 
 export default function ProjectsPage() {
@@ -14,12 +15,12 @@ export default function ProjectsPage() {
         <SectionHeader
           label="All Projects"
           title="What I've Built"
-          description="Each project represents real engineering work — production systems serving users, processing data, and handling payments. Not tutorials or toy apps."
+          description="Production systems serving real users, processing real data, and handling real money. Not tutorials or toy apps."
         />
 
         <div className="grid gap-8 md:grid-cols-2">
-          {projects.map((project) => (
-            <ProjectCard key={project.slug} project={project} />
+          {projects.map((project, i) => (
+            <ProjectCard key={project.slug} project={project} index={i} />
           ))}
         </div>
       </Section>

@@ -10,12 +10,12 @@ export function FeaturedProjects() {
       <SectionHeader
         label="Selected Work"
         title="Featured Projects"
-        description="A selection of projects that represent the range of my work — from SaaS products and ecommerce platforms to data tools and AI systems."
+        description="Production software — not tutorials. Each project serves real users, processes real data, or handles real money."
       />
 
       <div className="grid gap-8 md:grid-cols-2">
-        {featured.map((project) => (
-          <ProjectCard key={project.slug} project={project} />
+        {featured.map((project, i) => (
+          <ProjectCard key={project.slug} project={project} index={i} />
         ))}
       </div>
     </Section>

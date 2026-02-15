@@ -1,12 +1,9 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { Badge } from "@/components/ui/badge";
 import { experience, education } from "@/data/experience";
-
-export const metadata = {
-  title: "Experience — Thomas Hart",
-  description:
-    "Professional experience and education in software engineering.",
-};
 
 export default function ExperiencePage() {
   return (
@@ -15,42 +12,56 @@ export default function ExperiencePage() {
         <SectionHeader
           label="Career"
           title="Experience & Education"
-          description="From studying computer science to founding a software company to building my own products."
+          description="From studying computer science at BYU to co-founding a software company to shipping enterprise-scale products."
         />
 
-        <div className="space-y-16">
+        <div className="space-y-20">
           <div>
-            <h3 className="mb-8 text-lg font-semibold text-neutral-200">
+            <h3 className="mb-10 text-sm font-semibold uppercase tracking-widest text-indigo-400">
               Work Experience
             </h3>
-            {experience.length > 0 ? (
-              <div className="space-y-12">
-                {experience.map((job) => (
-                  <div
-                    key={`${job.company}-${job.role}`}
-                    className="border-l-2 border-neutral-800 pl-8"
-                  >
-                    <div className="mb-2">
-                      <h4 className="text-lg font-medium text-neutral-100">
+            <div className="relative space-y-12 pl-8 before:absolute before:left-0 before:top-2 before:h-[calc(100%-16px)] before:w-px before:bg-gradient-to-b before:from-indigo-500/50 before:via-neutral-800 before:to-transparent">
+              {experience.map((job, i) => (
+                <motion.div
+                  key={`${job.company}-${job.role}`}
+                  initial={{ opacity: 0, x: -20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: i * 0.1 }}
+                  className="relative"
+                >
+                  {/* Timeline dot */}
+                  <div className="absolute -left-8 top-1.5 flex h-4 w-4 -translate-x-1/2 items-center justify-center">
+                    <div className="h-3 w-3 rounded-full border-2 border-indigo-500 bg-neutral-950" />
+                  </div>
+
+                  <div className="rounded-xl border border-neutral-800/50 bg-neutral-900/30 p-6 transition-colors hover:border-neutral-700/50 hover:bg-neutral-900/50">
+                    <div className="mb-1 flex flex-wrap items-baseline justify-between gap-2">
+                      <h4 className="text-xl font-bold text-white">
                         {job.role}
                       </h4>
-                      <p className="text-sm text-neutral-500">
-                        {job.company} &middot; {job.period}
-                      </p>
+                      <span className="text-sm text-neutral-600">
+                        {job.period}
+                      </span>
                     </div>
-                    <p className="mb-4 text-neutral-400">{job.description}</p>
-                    <ul className="mb-4 space-y-2">
+                    <p className="mb-4 text-sm font-medium text-indigo-400/80">
+                      {job.company} &middot; {job.location}
+                    </p>
+                    <p className="mb-4 text-sm leading-relaxed text-neutral-400">
+                      {job.description}
+                    </p>
+                    <ul className="mb-5 space-y-2">
                       {job.highlights.map((h) => (
                         <li
                           key={h}
                           className="flex items-start gap-3 text-sm text-neutral-500"
                         >
-                          <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-700" />
+                          <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-indigo-500/50" />
                           {h}
                         </li>
                       ))}
                     </ul>
-                    <div className="flex flex-wrap gap-2">
+                    <div className="flex flex-wrap gap-1.5">
                       {job.techUsed.map((tech) => (
                         <Badge key={tech} variant="outline">
                           {tech}
@@ -58,55 +69,43 @@ export default function ExperiencePage() {
                       ))}
                     </div>
                   </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-neutral-500">
-                {/* TODO: Fill in work experience */}
-                Work experience entries to be added.
-              </p>
-            )}
+                </motion.div>
+              ))}
+            </div>
           </div>
 
           <div>
-            <h3 className="mb-8 text-lg font-semibold text-neutral-200">
+            <h3 className="mb-10 text-sm font-semibold uppercase tracking-widest text-indigo-400">
               Education
             </h3>
-            {education.length > 0 ? (
-              <div className="space-y-8">
-                {education.map((edu) => (
-                  <div
-                    key={edu.institution}
-                    className="border-l-2 border-neutral-800 pl-8"
-                  >
-                    <h4 className="text-lg font-medium text-neutral-100">
-                      {edu.degree}
-                    </h4>
-                    <p className="text-sm text-neutral-500">
-                      {edu.institution} &middot; {edu.period}
-                    </p>
-                    {edu.highlights.length > 0 && (
-                      <ul className="mt-3 space-y-2">
-                        {edu.highlights.map((h) => (
-                          <li
-                            key={h}
-                            className="flex items-start gap-3 text-sm text-neutral-500"
-                          >
-                            <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-neutral-700" />
-                            {h}
-                          </li>
-                        ))}
-                      </ul>
-                    )}
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <p className="text-neutral-500">
-                {/* TODO: Fill in education */}
-                Education entries to be added.
-              </p>
-            )}
+            {education.map((edu, i) => (
+              <motion.div
+                key={edu.institution}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: i * 0.1 }}
+                className="rounded-xl border border-neutral-800/50 bg-neutral-900/30 p-6"
+              >
+                <h4 className="text-xl font-bold text-white">{edu.degree}</h4>
+                <p className="mt-1 text-sm font-medium text-indigo-400/80">
+                  {edu.institution} &middot; {edu.period}
+                </p>
+                {edu.highlights.length > 0 && (
+                  <ul className="mt-4 space-y-2">
+                    {edu.highlights.map((h) => (
+                      <li
+                        key={h}
+                        className="flex items-start gap-3 text-sm text-neutral-500"
+                      >
+                        <span className="mt-1.5 h-1.5 w-1.5 flex-shrink-0 rounded-full bg-indigo-500/50" />
+                        {h}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </motion.div>
+            ))}
           </div>
         </div>
       </Section>
