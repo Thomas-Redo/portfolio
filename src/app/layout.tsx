@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Header } from "@/components/layout/header";
+import { ContactForm } from "@/components/sections/contact-form";
 import { Footer } from "@/components/layout/footer";
 import "./globals.css";
 
@@ -27,6 +28,7 @@ export default function RootLayout({
       >
         <Header />
         <main>{children}</main>
+        <ContactForm />
         <Footer />
       </body>
     </html>
