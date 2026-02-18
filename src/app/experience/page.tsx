@@ -3,17 +3,36 @@
 import { motion } from "framer-motion";
 import { Section, SectionHeader } from "@/components/ui/section";
 import { Badge } from "@/components/ui/badge";
-import { experience, education } from "@/data/experience";
+import { experience, education, skills } from "@/data/experience";
+
+const categoryLabels: Record<string, string> = {
+  languages: "Languages",
+  frontend: "Frontend",
+  backend: "Backend",
+  databases: "Databases & ORMs",
+  infrastructure: "Infrastructure",
+  tools: "Tools & Integrations",
+};
 
 export default function ExperiencePage() {
   return (
     <div className="pt-20">
       <Section>
-        <SectionHeader
-          label="Career"
-          title="Experience & Education"
-          description="From studying computer science at BYU to co-founding a software company to shipping enterprise-scale products."
-        />
+        <div className="mb-16 flex items-start justify-between">
+          <SectionHeader
+            label="Career"
+            title="Experience & Education"
+            description="From studying computer science at BYU to co-founding a software company to shipping enterprise-scale products."
+            className="mb-0"
+          />
+          <a
+            href="/thomas-hart-resume.pdf"
+            download
+            className="flex-shrink-0 rounded-lg bg-indigo-600 px-6 py-3 text-sm font-semibold text-white transition-all hover:bg-indigo-500 hover:shadow-[0_0_30px_rgba(99,102,241,0.3)]"
+          >
+            Download PDF
+          </a>
+        </div>
 
         <div className="space-y-20">
           <div>
@@ -106,6 +125,34 @@ export default function ExperiencePage() {
                 )}
               </motion.div>
             ))}
+          </div>
+          <div>
+            <h3 className="mb-10 text-sm font-semibold uppercase tracking-widest text-indigo-400">
+              Technical Skills
+            </h3>
+            <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+              {Object.entries(skills).map(([category, items]) => (
+                <motion.div
+                  key={category}
+                  initial={{ opacity: 0, y: 20 }}
+                  whileInView={{ opacity: 1, y: 0 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5 }}
+                  className="rounded-xl border border-neutral-800/50 bg-neutral-900/30 p-5"
+                >
+                  <h4 className="mb-3 text-xs font-medium uppercase tracking-widest text-neutral-500">
+                    {categoryLabels[category] ?? category}
+                  </h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {items.map((skill) => (
+                      <Badge key={skill} variant="outline">
+                        {skill}
+                      </Badge>
+                    ))}
+                  </div>
+                </motion.div>
+              ))}
+            </div>
           </div>
         </div>
       </Section>
