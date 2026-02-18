@@ -1,36 +1,9 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { FadeIn } from "@/components/ui/fade-in";
 import type { Architecture } from "@/data/projects";
-
-const tierColors = [
-  {
-    border: "border-indigo-500/30",
-    accent: "bg-indigo-500",
-    text: "text-indigo-400",
-    glow: "hover:shadow-[0_0_20px_rgba(99,102,241,0.12)]",
-  },
-  {
-    border: "border-emerald-500/30",
-    accent: "bg-emerald-500",
-    text: "text-emerald-400",
-    glow: "hover:shadow-[0_0_20px_rgba(16,185,129,0.12)]",
-  },
-  {
-    border: "border-amber-500/30",
-    accent: "bg-amber-500",
-    text: "text-amber-400",
-    glow: "hover:shadow-[0_0_20px_rgba(245,158,11,0.12)]",
-  },
-  {
-    border: "border-purple-500/30",
-    accent: "bg-purple-500",
-    text: "text-purple-400",
-    glow: "hover:shadow-[0_0_20px_rgba(168,85,247,0.12)]",
-  },
-];
 
 interface EdgePath {
   d: string;
@@ -48,6 +21,11 @@ export function ArchitectureDiagram({
   const nodeRefs = useRef(new Map<string, HTMLDivElement>());
   const [edgePaths, setEdgePaths] = useState<EdgePath[]>([]);
   const [measured, setMeasured] = useState(false);
+
+  const rowCount = useMemo(
+    () => Math.max(...architecture.nodes.map((n) => n.row)) + 1,
+    [architecture.nodes],
+  );
 
   const recalculate = useCallback(() => {
     const container = containerRef.current;
@@ -79,7 +57,7 @@ export function ArchitectureDiagram({
         const y2 = toCY;
         d = `M ${x1} ${y1} L ${x2} ${y2}`;
         labelX = (x1 + x2) / 2;
-        labelY = (y1 + y2) / 2 - 12;
+        labelY = (y1 + y2) / 2 - 14;
       } else {
         const x1 = fr.left + fr.width / 2 - cr.left;
         const y1 = fr.bottom - cr.top;
@@ -100,7 +78,7 @@ export function ArchitectureDiagram({
   }, [architecture.edges]);
 
   useEffect(() => {
-    const timer = setTimeout(recalculate, 200);
+    const timer = setTimeout(recalculate, 250);
     const observer = new ResizeObserver(recalculate);
     if (containerRef.current) observer.observe(containerRef.current);
     return () => {
@@ -122,7 +100,7 @@ export function ArchitectureDiagram({
         <div ref={containerRef} className="relative">
           {/* SVG edges — desktop only */}
           <svg
-            className={`pointer-events-none absolute inset-0 hidden h-full w-full transition-opacity duration-700 md:block ${measured ? "opacity-100" : "opacity-0"}`}
+            className={`pointer-events-none absolute inset-0 z-10 hidden h-full w-full transition-opacity duration-700 md:block ${measured ? "opacity-100" : "opacity-0"}`}
             style={{ overflow: "visible" }}
           >
             <defs>
@@ -178,49 +156,61 @@ export function ArchitectureDiagram({
                 ),
             )}
 
-          {/* Tier rows with nodes */}
-          <div className="flex flex-col gap-16">
-            {architecture.tiers.map((tier, ti) => {
-              const c = tierColors[ti % tierColors.length];
-              return (
-                <motion.div
-                  key={tier.label}
-                  initial={{ opacity: 0, y: 25 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, margin: "-40px" }}
-                  transition={{
-                    duration: 0.6,
-                    delay: ti * 0.12,
-                    ease: [0.22, 1, 0.36, 1],
-                  }}
-                >
-                  <p
-                    className={`mb-3 text-[11px] font-semibold uppercase tracking-widest opacity-60 ${c.text}`}
-                  >
-                    {tier.label}
-                  </p>
+          {/* 2D Node Grid — 5 columns, N rows */}
+          <div
+            className="hidden md:grid"
+            style={{
+              gridTemplateColumns: "repeat(5, 1fr)",
+              gridTemplateRows: `repeat(${rowCount}, auto)`,
+              gap: "3.5rem 1rem",
+            }}
+          >
+            {architecture.nodes.map((node, ni) => (
+              <motion.div
+                key={node.id}
+                ref={(el) => {
+                  if (el) nodeRefs.current.set(node.id, el);
+                }}
+                className="relative z-20 flex items-center justify-center rounded-xl border border-neutral-700/40 bg-neutral-900/80 px-4 py-3 text-center backdrop-blur-sm transition-all duration-300 hover:border-indigo-500/30 hover:shadow-[0_0_20px_rgba(99,102,241,0.1)]"
+                style={{
+                  gridRow: node.row + 1,
+                  gridColumn: node.col,
+                }}
+                initial={{ opacity: 0, scale: 0.9 }}
+                whileInView={{ opacity: 1, scale: 1 }}
+                viewport={{ once: true, margin: "-40px" }}
+                transition={{
+                  duration: 0.5,
+                  delay: ni * 0.07,
+                  ease: [0.22, 1, 0.36, 1],
+                }}
+              >
+                <span className="text-sm font-medium text-neutral-200">
+                  {node.label}
+                </span>
+              </motion.div>
+            ))}
+          </div>
 
-                  <div className="flex flex-wrap justify-center gap-4">
-                    {tier.nodes.map((node) => (
-                      <div
-                        key={node.id}
-                        ref={(el) => {
-                          if (el) nodeRefs.current.set(node.id, el);
-                        }}
-                        className={`relative rounded-xl border bg-neutral-900/80 px-5 py-3.5 backdrop-blur-sm transition-all duration-300 ${c.border} ${c.glow}`}
-                      >
-                        <div
-                          className={`absolute bottom-3 left-0 top-3 w-0.5 rounded-full opacity-50 ${c.accent}`}
-                        />
-                        <span className="text-sm font-medium text-neutral-200">
-                          {node.label}
-                        </span>
-                      </div>
-                    ))}
-                  </div>
-                </motion.div>
-              );
-            })}
+          {/* Mobile: simple stacked list */}
+          <div className="flex flex-col gap-3 md:hidden">
+            {architecture.nodes.map((node, ni) => (
+              <motion.div
+                key={node.id}
+                ref={(el) => {
+                  if (el) nodeRefs.current.set(node.id, el);
+                }}
+                className="rounded-xl border border-neutral-700/40 bg-neutral-900/80 px-4 py-3 backdrop-blur-sm"
+                initial={{ opacity: 0, x: -20 }}
+                whileInView={{ opacity: 1, x: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.4, delay: ni * 0.05 }}
+              >
+                <span className="text-sm font-medium text-neutral-200">
+                  {node.label}
+                </span>
+              </motion.div>
+            ))}
           </div>
         </div>
       </div>

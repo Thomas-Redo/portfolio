@@ -1,6 +1,8 @@
 export interface ArchNode {
   id: string;
   label: string;
+  row: number;
+  col: number;
 }
 
 export interface ArchEdge {
@@ -9,13 +11,8 @@ export interface ArchEdge {
   label?: string;
 }
 
-export interface ArchTier {
-  label: string;
-  nodes: ArchNode[];
-}
-
 export interface Architecture {
-  tiers: ArchTier[];
+  nodes: ArchNode[];
   edges: ArchEdge[];
 }
 
@@ -73,37 +70,20 @@ export const projects: Project[] = [
     year: "2025",
     status: "active",
     architecture: {
-      tiers: [
-        {
-          label: "Client",
-          nodes: [{ id: "app", label: "Next.js App" }],
-        },
-        {
-          label: "API",
-          nodes: [
-            { id: "api", label: "API Routes" },
-            { id: "webhooks", label: "Stripe Webhooks" },
-          ],
-        },
-        {
-          label: "Services",
-          nodes: [
-            { id: "sharp", label: "Sharp Pipeline" },
-            { id: "billing", label: "Stripe Billing" },
-          ],
-        },
-        {
-          label: "Storage",
-          nodes: [
-            { id: "r2", label: "Cloudflare R2" },
-            { id: "db", label: "PostgreSQL" },
-          ],
-        },
+      nodes: [
+        { id: "app", label: "Next.js App", row: 0, col: 3 },
+        { id: "api", label: "API Routes", row: 1, col: 2 },
+        { id: "webhooks", label: "Stripe Webhooks", row: 1, col: 4 },
+        { id: "sharp", label: "Sharp Pipeline", row: 2, col: 2 },
+        { id: "billing", label: "Stripe Billing", row: 2, col: 4 },
+        { id: "r2", label: "Cloudflare R2", row: 3, col: 2 },
+        { id: "db", label: "PostgreSQL", row: 3, col: 4 },
       ],
       edges: [
         { from: "app", to: "api", label: "REST" },
+        { from: "app", to: "webhooks", label: "Events" },
         { from: "api", to: "sharp", label: "Image Buffer" },
-        { from: "webhooks", to: "billing", label: "Events" },
+        { from: "webhooks", to: "billing", label: "Subscriptions" },
         { from: "sharp", to: "r2", label: "Presigned Upload" },
         { from: "billing", to: "db", label: "Prisma" },
       ],
@@ -142,27 +122,13 @@ export const projects: Project[] = [
     year: "2025–2026",
     status: "active",
     architecture: {
-      tiers: [
-        {
-          label: "Client",
-          nodes: [{ id: "app", label: "Next.js + D3.js" }],
-        },
-        {
-          label: "API",
-          nodes: [{ id: "api", label: "REST Routes" }],
-        },
-        {
-          label: "Services",
-          nodes: [
-            { id: "aggregation", label: "Aggregation Engine" },
-            { id: "provenance", label: "Provenance Tracker" },
-            { id: "cache", label: "Query Cache" },
-          ],
-        },
-        {
-          label: "Data",
-          nodes: [{ id: "db", label: "PostgreSQL" }],
-        },
+      nodes: [
+        { id: "app", label: "Next.js + D3.js", row: 0, col: 3 },
+        { id: "api", label: "REST Routes", row: 1, col: 3 },
+        { id: "aggregation", label: "Aggregation Engine", row: 2, col: 1 },
+        { id: "provenance", label: "Provenance Tracker", row: 2, col: 3 },
+        { id: "cache", label: "Query Cache", row: 2, col: 5 },
+        { id: "db", label: "PostgreSQL", row: 3, col: 2 },
       ],
       edges: [
         { from: "app", to: "api", label: "Filtered Queries" },
@@ -206,30 +172,14 @@ export const projects: Project[] = [
     year: "2023–2026",
     status: "active",
     architecture: {
-      tiers: [
-        {
-          label: "Client",
-          nodes: [{ id: "app", label: "Nuxt 3 + Vue 3" }],
-        },
-        {
-          label: "Server",
-          nodes: [{ id: "server", label: "Server Routes" }],
-        },
-        {
-          label: "Services",
-          nodes: [
-            { id: "lambda", label: "AWS Lambda" },
-            { id: "blog", label: "Blog Engine" },
-            { id: "portal", label: "Client Portal" },
-          ],
-        },
-        {
-          label: "Storage",
-          nodes: [
-            { id: "mongo", label: "MongoDB" },
-            { id: "s3", label: "AWS S3" },
-          ],
-        },
+      nodes: [
+        { id: "app", label: "Nuxt 3 + Vue 3", row: 0, col: 3 },
+        { id: "server", label: "Server Routes", row: 1, col: 3 },
+        { id: "lambda", label: "AWS Lambda", row: 2, col: 1 },
+        { id: "blog", label: "Blog Engine", row: 2, col: 3 },
+        { id: "portal", label: "Client Portal", row: 2, col: 5 },
+        { id: "mongo", label: "MongoDB", row: 3, col: 2 },
+        { id: "s3", label: "AWS S3", row: 3, col: 4 },
       ],
       edges: [
         { from: "app", to: "server", label: "SSR + API" },
@@ -273,29 +223,13 @@ export const projects: Project[] = [
     year: "2025–2026",
     status: "active",
     architecture: {
-      tiers: [
-        {
-          label: "Client",
-          nodes: [{ id: "app", label: "Next.js App" }],
-        },
-        {
-          label: "3D Engine",
-          nodes: [
-            { id: "three", label: "Three.js + WebGL" },
-            { id: "canvas", label: "Touch Painter" },
-          ],
-        },
-        {
-          label: "Processing",
-          nodes: [{ id: "emotions", label: "Emotion Mapper" }],
-        },
-        {
-          label: "Output",
-          nodes: [
-            { id: "d3", label: "D3.js Radar Charts" },
-            { id: "local", label: "IndexedDB" },
-          ],
-        },
+      nodes: [
+        { id: "app", label: "Next.js App", row: 0, col: 3 },
+        { id: "three", label: "Three.js + WebGL", row: 1, col: 2 },
+        { id: "canvas", label: "Touch Painter", row: 1, col: 4 },
+        { id: "emotions", label: "Emotion Mapper", row: 2, col: 3 },
+        { id: "d3", label: "D3.js Radar Charts", row: 3, col: 2 },
+        { id: "local", label: "IndexedDB", row: 3, col: 4 },
       ],
       edges: [
         { from: "app", to: "three", label: "Render Loop" },
@@ -344,30 +278,14 @@ export const projects: Project[] = [
     year: "2024–2026",
     status: "active",
     architecture: {
-      tiers: [
-        {
-          label: "Client",
-          nodes: [{ id: "app", label: "Nuxt 3 + Vue 3" }],
-        },
-        {
-          label: "API",
-          nodes: [{ id: "server", label: "Server Routes" }],
-        },
-        {
-          label: "Services",
-          nodes: [
-            { id: "paypal", label: "PayPal API" },
-            { id: "affiliate", label: "Affiliate Engine" },
-            { id: "reviews", label: "Review System" },
-          ],
-        },
-        {
-          label: "Storage",
-          nodes: [
-            { id: "mongo", label: "MongoDB" },
-            { id: "s3", label: "AWS S3" },
-          ],
-        },
+      nodes: [
+        { id: "app", label: "Nuxt 3 + Vue 3", row: 0, col: 3 },
+        { id: "server", label: "Server Routes", row: 1, col: 3 },
+        { id: "paypal", label: "PayPal API", row: 2, col: 1 },
+        { id: "affiliate", label: "Affiliate Engine", row: 2, col: 3 },
+        { id: "reviews", label: "Review System", row: 2, col: 5 },
+        { id: "mongo", label: "MongoDB", row: 3, col: 2 },
+        { id: "s3", label: "AWS S3", row: 3, col: 4 },
       ],
       edges: [
         { from: "app", to: "server", label: "SSR + API" },
@@ -412,27 +330,13 @@ export const projects: Project[] = [
     year: "2024–2025",
     status: "active",
     architecture: {
-      tiers: [
-        {
-          label: "Client",
-          nodes: [{ id: "app", label: "Nuxt 3 + Vue 3" }],
-        },
-        {
-          label: "API",
-          nodes: [{ id: "server", label: "Server Routes" }],
-        },
-        {
-          label: "Services",
-          nodes: [
-            { id: "paypal", label: "PayPal API" },
-            { id: "lambda", label: "AWS Lambda" },
-            { id: "inventory", label: "Inventory Manager" },
-          ],
-        },
-        {
-          label: "Storage",
-          nodes: [{ id: "mongo", label: "MongoDB" }],
-        },
+      nodes: [
+        { id: "app", label: "Nuxt 3 + Vue 3", row: 0, col: 3 },
+        { id: "server", label: "Server Routes", row: 1, col: 3 },
+        { id: "paypal", label: "PayPal API", row: 2, col: 1 },
+        { id: "lambda", label: "AWS Lambda", row: 2, col: 3 },
+        { id: "inventory", label: "Inventory Manager", row: 2, col: 5 },
+        { id: "mongo", label: "MongoDB", row: 3, col: 3 },
       ],
       edges: [
         { from: "app", to: "server", label: "SSR + API" },
@@ -479,27 +383,13 @@ export const projects: Project[] = [
     year: "2024–2025",
     status: "active",
     architecture: {
-      tiers: [
-        {
-          label: "Client",
-          nodes: [{ id: "app", label: "Nuxt 3 + Vue 3" }],
-        },
-        {
-          label: "API",
-          nodes: [{ id: "server", label: "Server Routes" }],
-        },
-        {
-          label: "Services",
-          nodes: [
-            { id: "verifier", label: "Purchase Verifier" },
-            { id: "reviews", label: "Review Engine" },
-            { id: "credibility", label: "Credibility Scorer" },
-          ],
-        },
-        {
-          label: "Storage",
-          nodes: [{ id: "mongo", label: "MongoDB" }],
-        },
+      nodes: [
+        { id: "app", label: "Nuxt 3 + Vue 3", row: 0, col: 3 },
+        { id: "server", label: "Server Routes", row: 1, col: 3 },
+        { id: "verifier", label: "Purchase Verifier", row: 2, col: 1 },
+        { id: "reviews", label: "Review Engine", row: 2, col: 3 },
+        { id: "credibility", label: "Credibility Scorer", row: 2, col: 5 },
+        { id: "mongo", label: "MongoDB", row: 3, col: 3 },
       ],
       edges: [
         { from: "app", to: "server", label: "SSR + API" },
@@ -542,29 +432,13 @@ export const projects: Project[] = [
     year: "2025–2026",
     status: "active",
     architecture: {
-      tiers: [
-        {
-          label: "Client",
-          nodes: [{ id: "app", label: "Next.js + Framer Motion" }],
-        },
-        {
-          label: "API",
-          nodes: [{ id: "api", label: "API Routes" }],
-        },
-        {
-          label: "Services",
-          nodes: [
-            { id: "contact", label: "Contact Pipeline" },
-            { id: "portfolio", label: "Case Study Engine" },
-          ],
-        },
-        {
-          label: "Infrastructure",
-          nodes: [
-            { id: "email", label: "Email Service" },
-            { id: "vercel", label: "Vercel Edge" },
-          ],
-        },
+      nodes: [
+        { id: "app", label: "Next.js + Framer Motion", row: 0, col: 3 },
+        { id: "api", label: "API Routes", row: 1, col: 3 },
+        { id: "contact", label: "Contact Pipeline", row: 2, col: 2 },
+        { id: "portfolio", label: "Case Study Engine", row: 2, col: 4 },
+        { id: "email", label: "Email Service", row: 3, col: 2 },
+        { id: "vercel", label: "Vercel Edge", row: 3, col: 4 },
       ],
       edges: [
         { from: "app", to: "api", label: "Form Data" },
