@@ -182,7 +182,7 @@ export function ArchitectureDiagram({
                 ref={(el) => {
                   if (el) nodeRefs.current.set(node.id, el);
                 }}
-                className="flex items-center justify-center rounded-xl border border-neutral-700/50 bg-neutral-900 px-4 py-3 text-center shadow-lg shadow-black/20 transition-all duration-300 hover:border-indigo-500/40 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)]"
+                className="flex flex-col items-center justify-center rounded-xl border border-neutral-700/50 bg-neutral-900 px-4 py-3 text-center shadow-lg shadow-black/20 transition-all duration-300 hover:border-indigo-500/40 hover:shadow-[0_0_20px_rgba(99,102,241,0.15)]"
                 style={{
                   gridRow: node.row + 1,
                   gridColumn: node.col,
@@ -199,6 +199,11 @@ export function ArchitectureDiagram({
                 <span className="text-sm font-medium text-neutral-200">
                   {node.label}
                 </span>
+                {node.subtitle && (
+                  <span className="mt-0.5 text-[10px] text-neutral-500">
+                    {node.subtitle}
+                  </span>
+                )}
               </motion.div>
             ))}
           </div>
@@ -208,7 +213,7 @@ export function ArchitectureDiagram({
             {architecture.nodes.map((node, ni) => (
               <motion.div
                 key={node.id}
-                className="rounded-xl border border-neutral-700/50 bg-neutral-900 px-4 py-3"
+                className="flex items-center gap-2 rounded-xl border border-neutral-700/50 bg-neutral-900 px-4 py-3"
                 initial={{ opacity: 0, x: -20 }}
                 whileInView={{ opacity: 1, x: 0 }}
                 viewport={{ once: true }}
@@ -217,6 +222,11 @@ export function ArchitectureDiagram({
                 <span className="text-sm font-medium text-neutral-200">
                   {node.label}
                 </span>
+                {node.subtitle && (
+                  <span className="text-[10px] text-neutral-500">
+                    {node.subtitle}
+                  </span>
+                )}
               </motion.div>
             ))}
           </div>

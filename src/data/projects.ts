@@ -1,6 +1,7 @@
 export interface ArchNode {
   id: string;
   label: string;
+  subtitle?: string;
   row: number;
   col: number;
 }
@@ -71,14 +72,14 @@ export const projects: Project[] = [
     status: "active",
     architecture: {
       nodes: [
-        { id: "app", label: "Next.js App", row: 0, col: 3 },
-        { id: "api", label: "API Routes", row: 1, col: 2 },
-        { id: "webhooks", label: "Stripe Webhooks", row: 1, col: 4 },
-        { id: "sharp", label: "Sharp Pipeline", row: 2, col: 2 },
-        { id: "billing", label: "Stripe Billing", row: 2, col: 4 },
-        { id: "r2", label: "Cloudflare R2", row: 3, col: 1 },
-        { id: "db", label: "PostgreSQL", row: 3, col: 3 },
-        { id: "keys", label: "API Key Store", row: 3, col: 5 },
+        { id: "app", label: "Next.js App", subtitle: "Frontend", row: 0, col: 3 },
+        { id: "api", label: "API Routes", subtitle: "REST API", row: 1, col: 2 },
+        { id: "webhooks", label: "Stripe Webhooks", subtitle: "Event Handler", row: 1, col: 4 },
+        { id: "sharp", label: "Sharp Pipeline", subtitle: "Image Processing", row: 2, col: 2 },
+        { id: "billing", label: "Stripe Billing", subtitle: "Payments", row: 2, col: 4 },
+        { id: "r2", label: "Cloudflare R2", subtitle: "Object Storage", row: 3, col: 1 },
+        { id: "db", label: "PostgreSQL", subtitle: "Database", row: 3, col: 3 },
+        { id: "keys", label: "API Key Store", subtitle: "Auth", row: 3, col: 5 },
       ],
       edges: [
         { from: "app", to: "api", label: "REST" },
@@ -125,14 +126,14 @@ export const projects: Project[] = [
     status: "active",
     architecture: {
       nodes: [
-        { id: "ui", label: "Next.js App", row: 0, col: 3 },
-        { id: "maps", label: "D3.js Maps", row: 1, col: 1 },
-        { id: "filters", label: "Filter Engine", row: 1, col: 3 },
-        { id: "api", label: "API Routes", row: 1, col: 5 },
-        { id: "agg", label: "Aggregation Engine", row: 2, col: 2 },
-        { id: "provenance", label: "Provenance Tracker", row: 2, col: 4 },
-        { id: "cache", label: "Cache Layer", row: 3, col: 2 },
-        { id: "db", label: "PostgreSQL", row: 3, col: 4 },
+        { id: "ui", label: "Next.js App", subtitle: "Frontend", row: 0, col: 3 },
+        { id: "maps", label: "D3.js Maps", subtitle: "Visualization", row: 1, col: 1 },
+        { id: "filters", label: "Filter Engine", subtitle: "Query Builder", row: 1, col: 3 },
+        { id: "api", label: "API Routes", subtitle: "REST API", row: 1, col: 5 },
+        { id: "agg", label: "Aggregation Engine", subtitle: "Data Processing", row: 2, col: 2 },
+        { id: "provenance", label: "Provenance Tracker", subtitle: "Edit History", row: 2, col: 4 },
+        { id: "cache", label: "Cache Layer", subtitle: "Performance", row: 3, col: 2 },
+        { id: "db", label: "PostgreSQL", subtitle: "Database", row: 3, col: 4 },
       ],
       edges: [
         { from: "ui", to: "maps", label: "GeoJSON" },
@@ -180,14 +181,14 @@ export const projects: Project[] = [
     status: "active",
     architecture: {
       nodes: [
-        { id: "nuxt", label: "Nuxt 3 SSR", row: 0, col: 3 },
-        { id: "routes", label: "Server Routes", row: 1, col: 2 },
-        { id: "lambda", label: "AWS Lambda", row: 1, col: 4 },
-        { id: "blog", label: "Blog Engine", row: 2, col: 1 },
-        { id: "portal", label: "Customer Portal", row: 2, col: 3 },
-        { id: "invoices", label: "Invoice System", row: 2, col: 5 },
-        { id: "mongo", label: "MongoDB", row: 3, col: 2 },
-        { id: "s3", label: "AWS S3", row: 3, col: 4 },
+        { id: "nuxt", label: "Nuxt 3 SSR", subtitle: "Frontend", row: 0, col: 3 },
+        { id: "routes", label: "Server Routes", subtitle: "API Layer", row: 1, col: 2 },
+        { id: "lambda", label: "AWS Lambda", subtitle: "Serverless", row: 1, col: 4 },
+        { id: "blog", label: "Blog Engine", subtitle: "Content", row: 2, col: 1 },
+        { id: "portal", label: "Customer Portal", subtitle: "Dashboard", row: 2, col: 3 },
+        { id: "invoices", label: "Invoice System", subtitle: "Billing", row: 2, col: 5 },
+        { id: "mongo", label: "MongoDB", subtitle: "Database", row: 3, col: 2 },
+        { id: "s3", label: "AWS S3", subtitle: "File Storage", row: 3, col: 4 },
       ],
       edges: [
         { from: "nuxt", to: "routes", label: "SSR" },
@@ -234,14 +235,14 @@ export const projects: Project[] = [
     status: "active",
     architecture: {
       nodes: [
-        { id: "app", label: "Next.js App", row: 0, col: 2 },
-        { id: "three", label: "Three.js", row: 0, col: 4 },
-        { id: "webgl", label: "WebGL Renderer", row: 1, col: 4 },
-        { id: "d3", label: "D3.js Charts", row: 1, col: 1 },
-        { id: "canvas", label: "Canvas API", row: 1, col: 3 },
-        { id: "emotions", label: "Emotion Mapping", row: 2, col: 2 },
-        { id: "scoring", label: "Dimension Scoring", row: 2, col: 4 },
-        { id: "idb", label: "IndexedDB", row: 3, col: 3 },
+        { id: "app", label: "Next.js App", subtitle: "Frontend", row: 0, col: 2 },
+        { id: "three", label: "Three.js", subtitle: "3D Engine", row: 0, col: 4 },
+        { id: "webgl", label: "WebGL Renderer", subtitle: "GPU Rendering", row: 1, col: 4 },
+        { id: "d3", label: "D3.js Charts", subtitle: "Visualization", row: 1, col: 1 },
+        { id: "canvas", label: "Canvas API", subtitle: "Paint Input", row: 1, col: 3 },
+        { id: "emotions", label: "Emotion Mapping", subtitle: "Analysis", row: 2, col: 2 },
+        { id: "scoring", label: "Dimension Scoring", subtitle: "Metrics", row: 2, col: 4 },
+        { id: "idb", label: "IndexedDB", subtitle: "Local Storage", row: 3, col: 3 },
       ],
       edges: [
         { from: "app", to: "three", label: "3D Models" },
@@ -293,14 +294,14 @@ export const projects: Project[] = [
     status: "active",
     architecture: {
       nodes: [
-        { id: "nuxt", label: "Nuxt 3 Storefront", row: 0, col: 3 },
-        { id: "routes", label: "Server Routes", row: 1, col: 2 },
-        { id: "paypal", label: "PayPal API", row: 1, col: 4 },
-        { id: "affiliate", label: "Affiliate Engine", row: 2, col: 1 },
-        { id: "wishlist", label: "Wishlist Manager", row: 2, col: 3 },
-        { id: "reviews", label: "Review System", row: 2, col: 5 },
-        { id: "mongo", label: "MongoDB", row: 3, col: 2 },
-        { id: "s3", label: "AWS S3", row: 3, col: 4 },
+        { id: "nuxt", label: "Nuxt 3 Storefront", subtitle: "Frontend", row: 0, col: 3 },
+        { id: "routes", label: "Server Routes", subtitle: "API Layer", row: 1, col: 2 },
+        { id: "paypal", label: "PayPal API", subtitle: "Payments", row: 1, col: 4 },
+        { id: "affiliate", label: "Affiliate Engine", subtitle: "Tracking", row: 2, col: 1 },
+        { id: "wishlist", label: "Wishlist Manager", subtitle: "User Prefs", row: 2, col: 3 },
+        { id: "reviews", label: "Review System", subtitle: "UGC", row: 2, col: 5 },
+        { id: "mongo", label: "MongoDB", subtitle: "Database", row: 3, col: 2 },
+        { id: "s3", label: "AWS S3", subtitle: "File Storage", row: 3, col: 4 },
       ],
       edges: [
         { from: "nuxt", to: "routes", label: "Cart Ops" },
@@ -348,13 +349,13 @@ export const projects: Project[] = [
     status: "active",
     architecture: {
       nodes: [
-        { id: "nuxt", label: "Nuxt 3 App", row: 0, col: 3 },
-        { id: "routes", label: "Server Routes", row: 1, col: 1 },
-        { id: "paypal", label: "PayPal API", row: 1, col: 3 },
-        { id: "lambda", label: "AWS Lambda", row: 1, col: 5 },
-        { id: "inventory", label: "Inventory Manager", row: 2, col: 2 },
-        { id: "orders", label: "Order Pipeline", row: 2, col: 4 },
-        { id: "mongo", label: "MongoDB", row: 3, col: 3 },
+        { id: "nuxt", label: "Nuxt 3 App", subtitle: "Frontend", row: 0, col: 3 },
+        { id: "routes", label: "Server Routes", subtitle: "API Layer", row: 1, col: 1 },
+        { id: "paypal", label: "PayPal API", subtitle: "Payments", row: 1, col: 3 },
+        { id: "lambda", label: "AWS Lambda", subtitle: "Background Jobs", row: 1, col: 5 },
+        { id: "inventory", label: "Inventory Manager", subtitle: "Stock Tracking", row: 2, col: 2 },
+        { id: "orders", label: "Order Pipeline", subtitle: "Fulfillment", row: 2, col: 4 },
+        { id: "mongo", label: "MongoDB", subtitle: "Database", row: 3, col: 3 },
       ],
       edges: [
         { from: "nuxt", to: "routes", label: "REST" },
@@ -404,13 +405,13 @@ export const projects: Project[] = [
     status: "active",
     architecture: {
       nodes: [
-        { id: "nuxt", label: "Nuxt 3 App", row: 0, col: 3 },
-        { id: "routes", label: "Server Routes", row: 1, col: 2 },
-        { id: "verify", label: "Verification API", row: 1, col: 4 },
-        { id: "reviews", label: "Review Engine", row: 2, col: 1 },
-        { id: "compare", label: "Comparison Builder", row: 2, col: 3 },
-        { id: "cred", label: "Credibility Scorer", row: 2, col: 5 },
-        { id: "mongo", label: "MongoDB", row: 3, col: 3 },
+        { id: "nuxt", label: "Nuxt 3 App", subtitle: "Frontend", row: 0, col: 3 },
+        { id: "routes", label: "Server Routes", subtitle: "API Layer", row: 1, col: 2 },
+        { id: "verify", label: "Verification API", subtitle: "Receipt Check", row: 1, col: 4 },
+        { id: "reviews", label: "Review Engine", subtitle: "Aggregation", row: 2, col: 1 },
+        { id: "compare", label: "Comparison Builder", subtitle: "Diffing", row: 2, col: 3 },
+        { id: "cred", label: "Credibility Scorer", subtitle: "Trust Metrics", row: 2, col: 5 },
+        { id: "mongo", label: "MongoDB", subtitle: "Database", row: 3, col: 3 },
       ],
       edges: [
         { from: "nuxt", to: "routes", label: "REST" },
@@ -457,14 +458,14 @@ export const projects: Project[] = [
     status: "active",
     architecture: {
       nodes: [
-        { id: "next", label: "Next.js App", row: 0, col: 2 },
-        { id: "motion", label: "Framer Motion", row: 0, col: 4 },
-        { id: "api", label: "API Routes", row: 1, col: 3 },
-        { id: "zod", label: "Zod Validation", row: 1, col: 5 },
-        { id: "contact", label: "Contact Pipeline", row: 2, col: 2 },
-        { id: "portfolio", label: "Portfolio Engine", row: 2, col: 4 },
-        { id: "edge", label: "Vercel Edge Config", row: 3, col: 2 },
-        { id: "cdn", label: "Image CDN", row: 3, col: 4 },
+        { id: "next", label: "Next.js App", subtitle: "Frontend", row: 0, col: 2 },
+        { id: "motion", label: "Framer Motion", subtitle: "Animations", row: 0, col: 4 },
+        { id: "api", label: "API Routes", subtitle: "Backend", row: 1, col: 3 },
+        { id: "zod", label: "Zod Validation", subtitle: "Schema Guard", row: 1, col: 5 },
+        { id: "contact", label: "Contact Pipeline", subtitle: "Lead Intake", row: 2, col: 2 },
+        { id: "portfolio", label: "Portfolio Engine", subtitle: "Case Studies", row: 2, col: 4 },
+        { id: "edge", label: "Vercel Edge Config", subtitle: "Runtime Config", row: 3, col: 2 },
+        { id: "cdn", label: "Image CDN", subtitle: "Static Assets", row: 3, col: 4 },
       ],
       edges: [
         { from: "next", to: "motion" },
