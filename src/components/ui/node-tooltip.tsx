@@ -2,7 +2,7 @@
 
 import { createPortal } from "react-dom";
 import { motion, AnimatePresence } from "framer-motion";
-import { useEffect, useState } from "react";
+import { useSyncExternalStore } from "react";
 
 interface NodeTooltipProps {
   content: string;
@@ -13,12 +13,17 @@ interface NodeTooltipProps {
 const TOOLTIP_OFFSET = 10;
 const VIEWPORT_PADDING = 12;
 
-export function NodeTooltip({ content, anchor, visible }: NodeTooltipProps) {
-  const [mounted, setMounted] = useState(false);
+const subscribe = () => () => {};
+function useIsMounted() {
+  return useSyncExternalStore(
+    subscribe,
+    () => true,
+    () => false,
+  );
+}
 
-  useEffect(() => {
-    setMounted(true);
-  }, []);
+export function NodeTooltip({ content, anchor, visible }: NodeTooltipProps) {
+  const mounted = useIsMounted();
 
   if (!mounted) return null;
 
